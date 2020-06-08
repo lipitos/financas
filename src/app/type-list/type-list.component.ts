@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Type } from '@angular/core';
 import { TipoService } from '../services/tipo.service';
+import { Tipo } from '../models/tipo';
 
 @Component({
   selector: 'app-type-list',
@@ -8,20 +9,35 @@ import { TipoService } from '../services/tipo.service';
 })
 export class TypeListComponent implements OnInit {
 
-  types;
-  selectedType;
+  tipos;
+  selectedTipo;
 
   tipo : {id, name} = {id:null, name: ""};
 
   constructor(public tipoService: TipoService) { }
 
   ngOnInit() {
-    this.tipoService.getTypes().subscribe(res=> {
-      this.types = res;
+    this.tipoService.getTipos().subscribe(res=> {
+      this.tipos = res;
     })
   }
 
-  public selectType(type){
-    this.selectedType = type;
+  public selectTipo(tipo){
+    this.selectedTipo = tipo;
   }
+
+  // Chama o serviço para obtém todos os tipos
+  getTipos() {
+    this.tipoService.getTipos().subscribe(res=> {
+      this.tipos = res;
+    });
+  }
+
+  // deleta um carro
+  deleteTipo(tipo) {
+    this.tipoService.deleteTipo(tipo).subscribe(() => {
+      this.getTipos();
+    });
+  }
+
 }

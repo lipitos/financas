@@ -8,11 +8,12 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let type of types">
-          <td>{{ type.id }}</td>
-          <td> {{ type.nome }}</td>          
+        <tr *ngFor="let tipo of tipos">
+          <td>{{ tipo.id }}</td>
+          <td> {{ tipo.nome }}</td>          
           <td>
-            <button class="btn btn-primary" (click)="selectType(type)"> Mostrar detalhes</button>
+            <button class="btn btn-primary" (click)="selectTipo(tipo)">Detalhes</button>
+            <button class="btn btn-danger" (click)="deleteTipo(tipo)">Excluir</button>
           </td>
         </tr>
       </tbody>

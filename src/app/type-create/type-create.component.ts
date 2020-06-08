@@ -8,17 +8,17 @@ import { TipoService } from '../services/tipo.service';
 })
 export class TypeCreateComponent implements OnInit {
 
-  type : {id, nome} = {id:null, nome: ""};
+  tipo : {id, nome} = {id:null, nome: ""};
 
   constructor(public tipoService: TipoService) { }
 
   ngOnInit() {
   }
 
-  createType(){
-    console.log(this.type);
-    this.tipoService.createType(this.type).subscribe(res=>{
-      this.type = {id: null, nome: ""};
+  createTipo(){
+    console.log(this.tipo);
+    this.tipoService.createTipo(this.tipo).subscribe(res=>{
+      this.tipo = {id: null, nome: ""};
     });
   }
 
