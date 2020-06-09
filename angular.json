@@ -124,6 +124,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "financas"
+    }
+  },
+  "defaultProject": "financas",
+  "cli": {
+    "analytics": "29f1903b-69d7-4515-9abc-ba2cd0b16180"
+  }
 }
