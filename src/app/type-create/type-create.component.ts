@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TipoService } from '../services/tipo.service';
+import { Tipo } from '../models/tipo';
 
 @Component({
   selector: 'app-type-create',
@@ -8,11 +10,47 @@ import { TipoService } from '../services/tipo.service';
 })
 export class TypeCreateComponent implements OnInit {
 
+
+  //Criação de formulário
+  formTipos: FormGroup;
+
   tipo : {id, nome} = {id:null, nome: ""};
 
-  constructor(public tipoService: TipoService) { }
+  successMsg = false;
 
-  ngOnInit() {
+  constructor(
+    public tipoService: TipoService,
+    private formBuilder: FormBuilder
+    ) { }
+
+  ngOnInit(): void {
+    this.createFormTipos();
+  }
+
+  sentData(){
+    this.tipo = this.formTipos.value;
+    console.log(this.tipo);
+
+    this.tipoService.createTipo(this.tipo).subscribe(res=>{
+      this.tipo = {id: null, nome: ""};
+    });
+
+    this.successMsg = true;
+    
+    this.formTipos.reset();
+
+  }
+
+  createFormTipos(){
+    this.formTipos = this.formBuilder.group({
+      id:[''],
+      nome:['',
+      Validators.compose([
+          Validators.required,
+          Validators.minLength(2)
+        ])
+      ]
+    });
   }
 
   createTipo(){
@@ -22,4 +60,11 @@ export class TypeCreateComponent implements OnInit {
     });
   }
 
+  get nome() {
+    return this.formTipos.get('nome');
+  }
+
+  get id(){
+    return this.formTipos.get('id');
+  }
 }

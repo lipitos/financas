@@ -2,19 +2,32 @@
     <div class="row">
       <div class="col-sm-8 offset-sm-2">
         <div>
-          <form>
+          <form [formGroup]="formTipos" (ngSubmit)="sentData()">
             <div class="form-group">
               <label for="id">ID</label>
-              <input [(ngModel)]="tipo.id" type="text" name="id" class="form-control" id="id" aria-describedby="idHelp" placeholder="Digite o ID">
-              <small id="idHelp" class="form-text text-muted">Digite a ID</small>
-  
-              <label for="name">Descrição</label>
-              <input [(ngModel)]="tipo.nome" type="text" name="nome" class="form-control" id="nome" aria-describedby="nameHelp" placeholder="Digite o nome">
-              <small id="nameHelp" class="form-text text-muted">Digite o tipo</small>
+              <input formControlName="id" type="text" name="id" class="form-control" id="id" aria-describedby="idHelp" placeholder="Digite o ID">
             </div>
+            <div class="form-group">  
+              <label for="name">Descrição</label>
+              <input formControlName="nome" type="text" name="nome" class="form-control" id="nome" aria-describedby="nameHelp" placeholder="Digite a descrição">
+              <div *ngIf="!nome.pristine && nome.errors">
+                <p *ngIf="nome.errors.required">
+                  A descrição é obrigatória.
+                </p>
+                <p *ngIf="nome.errors.minlength">
+                  A descrição deve ter no mínimo 2 caracters.
+                </p>
+              </div>
+            </div>
+            <button class="btn btn-primary" [disabled]="!formTipos.valid">Criar tipo</button>
           </form>
-          <button class="btn btn-primary" (click)="createTipo()">Criar tipo</button>
         </div>
       </div>
+    </div>
+    <div class="alert alert-success alert-dismissible fade show" role="alert" *ngIf="successMsg">
+      Cadastro realizado com sucesso.
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
     </div>
 </div>
